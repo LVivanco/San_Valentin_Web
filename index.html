@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>San Valentín - Panda y Flores</title>
+        <link rel="stylesheet" href="styles.css" />
+        <style>
+            body {
+                background-color: #e6ccff;
+                text-align: center;
+                font-family: Arial, sans-serif;
+                overflow: hidden;
+            }
+            .container {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+            .counter {
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 20px;
+                font-weight: bold;
+                background: rgba(255, 255, 255, 0.7);
+                padding: 10px 20px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .panda {
+                position: relative;
+                margin-top: 40px;
+            }
+            .panda img {
+                width: 200px;
+                animation: bounce 2s infinite;
+            }
+            @keyframes bounce {
+                0%,
+                100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-10px);
+                }
+            }
+            button {
+                background-color: #d8bfd8;
+                border: none;
+                padding: 10px 20px;
+                font-size: 18px;
+                border-radius: 20px;
+                cursor: pointer;
+                margin-top: 20px;
+            }
+            .floating-icon {
+                position: absolute;
+                font-size: 24px;
+                animation: floatUp 3s linear infinite;
+            }
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100px);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="counter" id="counter">
+            🐼 <span id="pandaCount">0</span> | ❤️
+            <span id="heartCount">0</span>
+        </div>
+        <div class="container">
+            <div class="panda">
+                <img src="imgs/3943-mini.webp" alt="Panda con corazón" />
+            </div>
+            <button id="flowerButton">🌸 Sayu, Click Aqui! 🌸</button>
+        </div>
+        <script>
+            let pandaCount = 0;
+            let heartCount = 0;
+
+            document
+                .getElementById("flowerButton")
+                .addEventListener("click", function () {
+                    let floatingIcon = document.createElement("div");
+                    floatingIcon.className = "floating-icon";
+                    let icons = ["❤️", "🐼"];
+                    let selectedIcon =
+                        icons[Math.floor(Math.random() * icons.length)];
+                    floatingIcon.innerHTML = selectedIcon;
+                    floatingIcon.style.left =
+                        Math.random() * window.innerWidth + "px";
+                    floatingIcon.style.top =
+                        Math.random() * window.innerHeight + "px";
+                    document.body.appendChild(floatingIcon);
+
+                    // Actualizamos los contadores según el icono seleccionado
+                    if (selectedIcon === "🐼") {
+                        pandaCount++;
+                        document.getElementById("pandaCount").innerText =
+                            pandaCount;
+                    } else {
+                        heartCount++;
+                        document.getElementById("heartCount").innerText =
+                            heartCount;
+                    }
+
+                    // Comprobamos si los contadores son iguales
+                    if (pandaCount === heartCount) {
+                        let pandaImage = document.querySelector(".panda img");
+
+                        if (pandaCount < 25) {
+                            // Si el número es menor a 10, cambia a imagen 1
+                            pandaImage.src = "imgs/STARBUCKS.jpg";
+                        } else if (pandaCount < 50) {
+                            // Si el número es menor a 50, cambia a imagen 2
+                            pandaImage.src = "imgs/Almuerzo.jpg";
+                        } else if (pandaCount < 75) {
+                            // Si el número es menor a 50, cambia a imagen 2
+                            pandaImage.src = "imgs/DIA.jpg";
+                        } else {
+                            // Si el número es mayor o igual a 50, cambia a imagen 3
+                            pandaImage.src = "imgs/PASEO.jpg";
+                        }
+                    }
+
+                    setTimeout(() => floatingIcon.remove(), 3000);
+                });
+        </script>
+    </body>
+</html>
